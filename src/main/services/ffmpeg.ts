@@ -2,7 +2,7 @@ import ffmpeg from 'fluent-ffmpeg';
 import path from 'node:path';
 import fs from 'node:fs';
 import { randomUUID } from 'node:crypto';
-import { resolveFfmpegPath } from './binaries';
+import { resolveFfmpegPath, resolveFfprobePath } from './binaries';
 import { CANVAS, canvasForAspectRatio, type CanvasSize } from '../../shared/constants';
 import type {
   AssetClip,
@@ -18,10 +18,8 @@ import type {
 } from '../../shared/types';
 import { clipDurationSec } from '../../shared/types';
 
-const ffprobeStaticPath = require('ffprobe-static').path as string;
-
 ffmpeg.setFfmpegPath(resolveFfmpegPath());
-ffmpeg.setFfprobePath(ffprobeStaticPath);
+ffmpeg.setFfprobePath(resolveFfprobePath());
 
 const VIDEO_EXT = new Set(['.mp4', '.mov', '.mkv', '.webm', '.avi']);
 const IMAGE_EXT = new Set(['.jpg', '.jpeg', '.png', '.webp', '.bmp']);
