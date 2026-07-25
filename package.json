@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "Local-first AI script writing and video editing assistant",
+  "author": "NovaEdits",
   "main": "dist-main/main/index.js",
   "scripts": {
     "dev": "concurrently -k -n VITE,ELECTRON -c cyan,yellow \"npm:dev:vite\" \"npm:dev:electron\"",
@@ -11,7 +12,10 @@
     "build:renderer": "vite build",
     "build:main": "tsc -p tsconfig.main.json",
     "build": "npm run build:renderer && npm run build:main",
-    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.main.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.main.json --noEmit",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist": "npm run build && electron-builder"
   },
   "dependencies": {
     "@google/genai": "^0.15.0",
@@ -39,5 +43,40 @@
     "typescript": "^5.5.2",
     "vite": "^5.3.1",
     "wait-on": "^7.2.0"
+  },
+  "build": {
+    "appId": "com.novaedits.app",
+    "productName": "NovaEdits",
+    "files": [
+      "dist/**/*",
+      "dist-main/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "resources/music",
+        "to": "music"
+      }
+    ],
+    "asarUnpack": [
+      "node_modules/ffmpeg-static/**",
+      "node_modules/ffprobe-static/**"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "target": "nsis",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.video"
+    }
   }
 }
