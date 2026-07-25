@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(artifact-design)",
+      "Bash(node -e ' *)",
+      "Bash(node --check extracted.js)",
+      "Bash(python3 -c ' *)",
+      "Artifact"
+    ]
+  }
+}

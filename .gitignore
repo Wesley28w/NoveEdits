@@ -1,0 +1,10 @@
+node_modules/
+dist/
+dist-main/
+dist-electron/
+release/
+.env
+resources/bin/
+*.log
+.DS_Store
+.vite/
