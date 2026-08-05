@@ -12,15 +12,24 @@ const dynamicImport = new Function('specifier', 'return import(specifier)') as (
 ) => Promise<typeof import('@google/genai')>;
 
 let client: GoogleGenAIClient | null = null;
+let clientApiKey: string | null = null;
+
+function activeApiKey(): string | undefined {
+  const settings = readSettingsSync();
+  const active = settings.geminiApiKeys.find((k) => k.id === settings.activeGeminiKeyId);
+  return active?.key || process.env.GEMINI_API_KEY;
+}
 
 export async function getClient(): Promise<GoogleGenAIClient> {
-  if (!client) {
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      throw new Error('GEMINI_API_KEY is not set. Add it to your .env file.');
-    }
+  const apiKey = activeApiKey();
+  if (!apiKey) {
+    throw new Error('No Gemini API key is set. Add one in Settings, or set GEMINI_API_KEY in your .env file.');
+  }
+  // Rebuild the client if the user switches their active key in Settings mid-session.
+  if (!client || clientApiKey !== apiKey) {
     const { GoogleGenAI } = await dynamicImport('@google/genai');
     client = new GoogleGenAI({ apiKey });
+    clientApiKey = apiKey;
   }
   return client;
 }

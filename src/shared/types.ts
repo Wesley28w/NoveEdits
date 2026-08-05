@@ -220,9 +220,18 @@ export interface EditorProjectSummary {
 
 export type ThemeMode = 'light' | 'dark' | 'system';
 
+export interface GeminiApiKeyEntry {
+  id: string;
+  label: string;
+  key: string;
+}
+
 export interface AppSettings {
   musicLibraryPath: string | null;
   geminiModel: string;
+  geminiApiKeys: GeminiApiKeyEntry[];
+  /** Which entry in `geminiApiKeys` is currently used; null falls back to the GEMINI_API_KEY env var. */
+  activeGeminiKeyId: string | null;
   theme: ThemeMode;
   /** Hex color, e.g. "#ff6a00". Drives --accent (and derived --accent-hover/--accent-soft). */
   accentColor: string;

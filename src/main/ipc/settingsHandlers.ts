@@ -8,6 +8,8 @@ import { DEFAULT_GEMINI_MODEL } from '../../shared/geminiModels';
 const DEFAULT_SETTINGS: AppSettings = {
   musicLibraryPath: null,
   geminiModel: DEFAULT_GEMINI_MODEL,
+  geminiApiKeys: [],
+  activeGeminiKeyId: null,
   theme: 'system',
   accentColor: '#ff6a00',
   textScale: 1,

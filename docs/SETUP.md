@@ -6,9 +6,9 @@
 
 ## First-time setup
 1. `npm install`
-2. Copy `.env.example` to `.env` and fill in `GEMINI_API_KEY=`.
+2. `npm run dev` — starts the Vite dev server and launches the Electron window.
+3. Add your Gemini API key in Settings → "Gemini API Key" (you can add multiple and switch which one is active — handy for spreading usage across accounts). Alternatively, copy `.env.example` to `.env` and fill in `GEMINI_API_KEY=`; keys added in Settings take priority over the `.env` value.
    **Important:** if you pasted an API key into a chat/log anywhere, rotate it in AI Studio and use the new key here — treat any key that passed through a chat transcript as compromised.
-3. `npm run dev` — starts the Vite dev server and launches the Electron window.
 
 ## What's bundled vs. downloaded
 - **ffmpeg** and **ffprobe** are vendored via npm (`ffmpeg-static`, `ffprobe-static`) — no manual install needed.
